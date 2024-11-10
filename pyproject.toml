@@ -2,7 +2,7 @@
 # project
 #-------------------------------------------------------------------
 [project]
-version = "0.0.15"
+version = "0.0.15-b0" #abc
 name = "bh-aws"
 ## saveversion = "hello" # foobar
 # foobar
