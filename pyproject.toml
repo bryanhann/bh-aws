@@ -4,7 +4,7 @@
 # "good" #foo
 [project]
 name = "bh-aws"
-version = "0.0.36" #foo
+version = "FOO" #foo
 ## saveversion = "hello" # foobar
 # foobar
 description = "A cli for aws ec2 instance management"
