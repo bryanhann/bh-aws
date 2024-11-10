@@ -2,9 +2,9 @@
 # project
 #-------------------------------------------------------------------
 [project]
+version = "0.0.44-b0" #foo
 name = "bh-aws"
-version = "0.0.44" #foo
-#         "0.0.44" #foo
+#         "0.0.44-b0" #foo
 ## saveversion = "hello" # foobar
 # foobar
 description = "A cli for aws ec2 instance management"
