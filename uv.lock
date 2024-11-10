@@ -3,7 +3,7 @@ requires-python = ">=3.12"
 
 [[package]]
 name = "bh-aws"
-version = "0.0.26"
+version = "0.0.26b0"
 source = { editable = "." }
 dependencies = [
     { name = "bh-bump" },
