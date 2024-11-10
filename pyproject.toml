@@ -3,8 +3,8 @@
 #-------------------------------------------------------------------
 [project]
 name = "bh-aws"
-version = "0.0.42-b0" #foo
-#         "0.0.42-b0" #foo
+version = "0.0.43" #foo
+#         "0.0.43" #foo
 ## saveversion = "hello" # foobar
 # foobar
 description = "A cli for aws ec2 instance management"
