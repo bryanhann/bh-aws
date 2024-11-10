@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------
 [project]
 name = "bh-aws"
-version = "0.0.3"
+version = "0.0.3-b0"
 description = "A cli for aws ec2 instance management"
 requires-python = ">=3.12"
 readme = "README.rst"
@@ -12,7 +12,7 @@ license = {text = "MIT license"}
 maintainers = [ {name = "Bryan Hann", email = "nobody@nowhere.com"} ]
 classifiers = [ ]
 dependencies = [
-    "bh-bump>=0.0.3b0",
+    "bh-bump>=0.0.3-b0b0",
     "bump2version>=1.0.1",
     "click>=8.1.7",
     "colorama>=0.4.6",
