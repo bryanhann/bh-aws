@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------
 # "0.0.37" #foo
 [project]
-version = "0.0.37" #foo
+version = "0.0.38" #foo
 name = "bh-aws"
 ## saveversion = "hello" # foobar
 # foobar
