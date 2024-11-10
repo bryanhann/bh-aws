@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------
 [project]
 name = "bh-aws"
-version = "0.0.7"
+version = "0.0.7-b0"
 description = "A cli for aws ec2 instance management"
 requires-python = ">=3.12"
 readme = "README.rst"
