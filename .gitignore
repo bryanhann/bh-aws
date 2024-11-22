@@ -1,3 +1,4 @@
+.tmp
 *.hide
 .mypy_cache/
 /.coverage
