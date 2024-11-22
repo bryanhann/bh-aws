@@ -2,7 +2,7 @@
 # project
 #-------------------------------------------------------------------
 [project]
-version = "0.0.4" # bh.bump: this line must be first.
+version = "0.0.4-b0" # bh.bump: this line must be first.
 name = "bh-aws"
 description = "A cli for aws ec2 instance management"
 requires-python = ">=3.12"
