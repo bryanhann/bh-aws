@@ -13,7 +13,10 @@ class Instance:
     def tags(self):
         return dict( (tag['Key'], tag['Value']) for tag in self.Tags )
     def name(self):
-        return self.tags()['Name']
+        try:
+            return self.tags()['Name']
+        except:
+            return 'NoName'
     def state(self):
         return self.State['Name']
     def ip(self):
