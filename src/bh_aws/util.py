@@ -14,9 +14,15 @@ def cli(line):
     stderr( '\nExecute the following:' )
     stderr(f'    {bold(line)}')
 
-def run(line, dry=False):
+def runc(line,dry=False):
+    return run(line, dry, capture=True)
+def run(line, dry=False, capture=False):
     stderr( '\nRunning:')
     stderr(f'    {bold(line)}')
     if dry: return
-    subprocess.run( line.split() )
+    return subprocess.run(
+        line.split(),
+        capture_output=capture,
+        text=True
+    )
 

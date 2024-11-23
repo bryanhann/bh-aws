@@ -4,9 +4,9 @@ import subprocess
 import pathlib
 import sys
 
+from bh_aws.util import stderr, bold
+
 from .instance import Instance
-from .util import stderr
-from .util import bold
 
 
 TMP=pathlib.Path.home()/'tmp'
