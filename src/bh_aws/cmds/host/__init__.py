@@ -6,6 +6,11 @@ from bh_aws.util import stderr, cli, run
 from bh_aws.constants import PROFILE, REFRESH
 
 from .aws import allinstances, inst4name, ip4name
+from .specs import Ubuntu, Suse
+
+SPECS={}
+SPECS['ubuntu'] = Ubuntu
+SPECS['suse'] = Suse
 
 app = typer.Typer()
 
@@ -59,4 +64,21 @@ def ssh(name: str, dry: bool=False, profile: str=PROFILE, user: str='ubuntu'):
     pem=f"~/.ssh/{name}.pem"
     line= f"ssh -i {pem} {user}@{host}"
     run(line, dry=dry)
+
+@app.command()
+def dev__launch(keyname: str, dry: bool=False, profile: str=PROFILE, spec: str='ubuntu'):
+    """Under development: launch a new ec2 intance."""
+    spec = SPECS[spec]
+    print( dir(spec) )
+    line = f"""
+    aws ec2 run-instances
+    --profile showme
+    --image-id {spec.image_id}
+    --instance-type {spec.instance_type}
+    --subnet-id {spec.subnet_id}
+    --security-group-ids {spec.security_group_ids}
+    --count {spec.count}
+    --key-name {keyname}
+    """
+    run(line)
 
