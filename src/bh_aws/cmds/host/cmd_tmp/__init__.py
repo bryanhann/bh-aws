@@ -5,14 +5,14 @@ import typer
 
 from bh_aws.util import run
 from bh_aws.constants import PROFILE
-from bh_aws import allinstances
-
+#from bh_aws import allinstances
+from bh_aws import Session
 from .launcher import Launcher
 
 app = typer.Typer()
 
-def tmps(): return [x for x in allinstances() if x.name().startswith('tmp-')]
-def ids4instances(xS): return ' '.join( [ x.id() for x in xS ] )
+#def tmps(): return [x for x in allinstances() if x.name().startswith('tmp-')]
+#def ids4instances(xS): return ' '.join( [ x.id() for x in xS ] )
 
 @app.callback()
 def dummy():
@@ -22,25 +22,24 @@ def dummy():
 @app.command()
 def stop(
     profile: str=PROFILE
-    , dry: bool=False
     ):
-    """Stop tmp-* instances
+    """Stop all temporary [tmp-*] ec2 instances
     """
-    ids = ids4instances(tmps())
-    line = f"aws ec2 --profile {profile} stop-instances --instance-ids {ids}"
-    run(line, dry=dry)
+    s=Session(profile)
+    for inst in s.tmp_instances():
+        print(f"stopping: {inst}")
+        inst.i.stop()
 
 @app.command()
 def terminate(
     profile: str=PROFILE
-    , dry: bool=False
     ):
-    """Terminate tmp-* instances
+    """Terminate all temporary [tmp-*] instances
     """
-    ids = ids4instances(tmps())
-    line = f"aws ec2 --profile {profile} terminate-instances --instance-ids {ids}"
-    run(line, dry=dry)
-
+    s=Session(profile)
+    for inst in s.tmp_instances():
+        print(f"terminating: {inst}")
+        inst.i.terminate()
 
 @app.command()
 def launch(
