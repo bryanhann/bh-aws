@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
+from typing_extensions import Annotated
 
 import typer
 
-from bh_aws.util import stderr, cli, run
-from bh_aws.constants import PROFILE, REFRESH
+from bh_aws import allinstances, inst4name, ip4name
+from bh_aws.util import run
+from bh_aws.constants import PROFILE, PEM
 
-from .aws import allinstances, inst4name, ip4name
-from .specs import Ubuntu, Suse
-
-SPECS={}
-SPECS['ubuntu'] = Ubuntu
-SPECS['suse'] = Suse
+from .cmd_tmp import app as tmp_app
 
 app = typer.Typer()
+app.add_typer(tmp_app, name="tmp")
+
 
 @app.callback()
 def dummy():
@@ -26,10 +25,14 @@ def list():
     They must have a tag naming them.
     """
     for inst in allinstances():
-        print(inst)
+        print(f"{inst} id=[{inst.id()}]")
 
 @app.command()
-def start(name: str, dry: bool=False, profile: str=PROFILE):
+def start(
+    name: str
+    , profile: str=PROFILE
+    , dry: bool=False
+    ):
     """Start the ec2 instance with the given name.
     """
     inst=inst4name(name)
@@ -38,8 +41,13 @@ def start(name: str, dry: bool=False, profile: str=PROFILE):
     line = f"aws ec2 --profile {profile} start-instances --instance-ids {inst.id()}"
     run(line, dry=dry)
 
+
 @app.command()
-def stop(name: str, dry: bool=False, profile: str=PROFILE):
+def stop(
+    name: str
+    , profile: str=PROFILE
+    , dry: bool=False
+    ):
     """Stop the ec2 instance with the given name.
     """
     inst=inst4name(name)
@@ -48,37 +56,26 @@ def stop(name: str, dry: bool=False, profile: str=PROFILE):
     run(line, dry=dry)
 
 @app.command()
-def ip(name):
+def ip(
+    name: str
+    ):
     """Print the public ip address of a running ec2 instance.
     """
     print( ip4name(name))
 
 @app.command()
-def ssh(name: str, dry: bool=False, profile: str=PROFILE, user: str='ubuntu'):
+def ssh(
+    name: Annotated[ str, typer.Option( help="Name of the host.") ]
+    , profile: str=PROFILE
+    , user: str='ubuntu'
+    , i: Annotated[ str, typer.Option( help="Identity file.") ]=PEM
+    , dry: bool=False
+    ):
     """Create an ssh connection to a running ec2 instance.
     """
     host=ip4name(name)
     if not host:
         print( 'host is not running' )
         return
-    pem=f"~/.ssh/{name}.pem"
-    line= f"ssh -i {pem} {user}@{host}"
+    line= f"ssh -i {i} {user}@{host}"
     run(line, dry=dry)
-
-@app.command()
-def dev__launch(keyname: str, dry: bool=False, profile: str=PROFILE, spec: str='ubuntu'):
-    """Under development: launch a new ec2 intance."""
-    spec = SPECS[spec]
-    print( dir(spec) )
-    line = f"""
-    aws ec2 run-instances
-    --profile showme
-    --image-id {spec.image_id}
-    --instance-type {spec.instance_type}
-    --subnet-id {spec.subnet_id}
-    --security-group-ids {spec.security_group_ids}
-    --count {spec.count}
-    --key-name {keyname}
-    """
-    run(line)
-

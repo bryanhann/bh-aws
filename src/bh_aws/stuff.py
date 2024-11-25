@@ -4,12 +4,11 @@ import subprocess
 import pathlib
 import sys
 
-from bh_aws.util import stderr, bold
-
+from .util import stderr, bold
 from .instance import Instance
 
 
-TMP=pathlib.Path.home()/'tmp'
+TMP=pathlib.Path('/tmp/bh-aws')
 TMP.is_dir() or TMP.mkdir()
 SRC=TMP/'tmp.aws.output'
 
@@ -61,4 +60,16 @@ def id4name(name):
 def ip4name(name):
     inst=inst4name(name)
     return (inst and inst.ip()) or ''
+
+
+def tmpname():
+    aa = list(names())
+    for ii in range(1000):
+        candidate = f"tmp-{ii}"
+        if not candidate in aa:
+            return candidate
+def names():
+    for inst in allinstances():
+        try: yield inst.name()
+        except: pass
 

@@ -1,3 +1,4 @@
+hide
 .tmp
 *.hide
 .mypy_cache/
