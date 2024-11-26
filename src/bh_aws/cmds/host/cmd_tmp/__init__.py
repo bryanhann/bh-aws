@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 from typing_extensions import Annotated
+from pprint import pprint
+
+import boto3
 
 import typer
 
-from bh_aws.util import run
 from bh_aws.constants import PROFILE
-#from bh_aws import allinstances
 from bh_aws import Session
-from .launcher import Launcher
+
+from .specs import SPECS
 
 app = typer.Typer()
-
-#def tmps(): return [x for x in allinstances() if x.name().startswith('tmp-')]
-#def ids4instances(xS): return ' '.join( [ x.id() for x in xS ] )
 
 @app.callback()
 def dummy():
@@ -43,22 +42,14 @@ def terminate(
 
 @app.command()
 def launch(
-    profile: str=PROFILE
-    , userdata: str='ubuntu'
-    , template: str='2'
-    , dry: bool=False
+    spec: str=''
     ):
-    """Launch a new temporary ec2 instance.
-    """
-    try:
-        launcher=Launcher(
-            profile=profile
-            , dry=dry
-            , userdata=userdata
-            , template=template
-        )
-    except Launcher.EXC_userdata:
-        print( f'failed: [--userdata {userdata}]' )
-        exit()
-    run(launcher._cmdline())
+    if not spec in SPECS:
+        aa = '|'.join(SPECS.keys())
+        print( f'--specs {aa}' )
+        return
+    template=SPECS[spec]
+    pprint(template.as_dict())
+    s=Session(template.profile)
+    s.c.run_instances(**template.as_dict())
 

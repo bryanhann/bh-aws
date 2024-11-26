@@ -3,6 +3,8 @@ import boto3
 
 def boto_dikt4tags(tags):
     acc={}
+    if tags is None:
+        return acc
     for tag in tags:
         acc[tag['Key']] = tag['Value']
     return acc
@@ -13,6 +15,9 @@ class BotoInstance:
     def tags(self):
         return boto_dikt4tags(self.i.tags)
     def name(s):
+        tags = s.tags()
+        if tags == None:
+            return 'NONE'
         return s.tags().get('Name')
     def __repr__(s):
         return f"<{s.name()} {s.i.state['Name']}> ip[{s.i.public_ip_address}]"
@@ -24,6 +29,7 @@ class Session:
     def __init__(self, profile):
         self.s = boto3.Session(profile_name=profile)
         self.r = self.s.resource('ec2')
+        self.c = self.s.client('ec2')
     def tmp_instances(self):
         for inst in self.instances():
             if inst.name().startswith('tmp-'):

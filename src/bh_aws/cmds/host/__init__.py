@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from typing_extensions import Annotated
-
 import typer
 
 from bh_aws.util import run
@@ -62,6 +61,7 @@ def ssh(
     if ip is None:
         print( 'host not running' )
         return
+    i = f'~/.ssh/{i}'
     line= f"ssh -i {i} {user}@{ip}"
     run(line, dry=dry)
 
