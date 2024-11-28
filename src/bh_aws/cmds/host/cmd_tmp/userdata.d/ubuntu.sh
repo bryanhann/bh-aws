@@ -1,27 +1,16 @@
 #!/usr/bin/env bash
-
+# userdata: ./userdata.d/ubuntu.sh
 INSTALL=/INSTALL
 LOG=${INSTALL}/install.log
-BASE=${INSTALL}
-REPO=${BASE}/repo
+REPO=${INSTALL}/repo
 
 sudo mkdir -p ${INSTALL}
 sudo touch ${LOG}
 sudo chmod 777 ${LOG}
 
-now () {
-    ts=$(date '+%Y-%m-%d %H:%M:%S')
-    echo ${ts}
-}
-
-log () {
-    echo $(now) : "$@" >> $LOG ;
-}
-
-run () {
-     log "running: [$*]"
-     $*
-}
+now () { echo $(date '+%Y-%m-%d %H:%M:%S')  ;       }
+log () { echo $(now) : "$@" >> $LOG         ;       }
+run () { log "running: [$*]"                ; $*  ; }
 
 _install () {
       log "_install: $1 is at [$(which $1)]"
@@ -29,7 +18,6 @@ _install () {
       run  sudo apt install -y $1
       log "_install: $1 is at [$(which $1)]"
  }
-
 
 log "++ user-data [$0] [$*]"
 log "user-data: tilde is [~]"

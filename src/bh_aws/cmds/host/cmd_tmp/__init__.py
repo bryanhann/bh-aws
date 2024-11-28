@@ -3,7 +3,6 @@ from typing_extensions import Annotated
 from pprint import pprint
 
 import boto3
-
 import typer
 
 from bh_aws.constants import PROFILE
@@ -43,13 +42,17 @@ def terminate(
 @app.command()
 def launch(
     spec: str=''
+    , dry: bool=False
     ):
     if not spec in SPECS:
         aa = '|'.join(SPECS.keys())
-        print( f'--specs {aa}' )
+        print( f'use:  --spec [{aa}]' )
         return
     template=SPECS[spec]
     pprint(template.as_dict())
     s=Session(template.profile)
+    if dry:
+        print('\ndry run')
+        return
     s.c.run_instances(**template.as_dict())
 
