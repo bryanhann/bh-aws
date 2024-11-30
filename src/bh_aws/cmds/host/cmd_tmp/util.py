@@ -25,4 +25,4 @@ def tags4dict(d):
     acc=[]
     for key,value in d.items():
         acc.append( {'Key': key, 'Value': value } )
-
+    return [{'ResourceType': 'instance', 'Tags': acc}]
