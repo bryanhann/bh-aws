@@ -8,7 +8,7 @@ from .abc import Showme_ABC
 
 @dataclass
 class Ubuntu(Showme_ABC):
-    UserData             = userdata('ubuntu.sh')
+    UserData             = userdata('git.sh')
     ImageId              = AMI.UbuntuA
     SecurityGroupIds     = [SG.default]
     TagSpecifications    = tags4name('Ubuntu')
