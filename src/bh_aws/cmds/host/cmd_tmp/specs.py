@@ -7,8 +7,15 @@ from .aws import AMI, SUBNET, SG
 from .abc import Showme_ABC
 
 @dataclass
+class Amazon(Showme_ABC):
+    UserData             = userdata('yum.sh')
+    ImageId              = AMI.Amazon_Linux_2
+    SecurityGroupIds     = [SG.default]
+    TagSpecifications    = tags4name('amazon')
+
+@dataclass
 class Ubuntu(Showme_ABC):
-    UserData             = userdata('git.sh')
+    UserData             = userdata('apt.sh')
     ImageId              = AMI.UbuntuA
     SecurityGroupIds     = [SG.default]
     TagSpecifications    = tags4name('Ubuntu')
@@ -24,3 +31,4 @@ class Suse(Showme_ABC):
 SPECS={}
 SPECS['ubuntu'] = Ubuntu()
 SPECS['suse'] = Suse()
+SPECS['amazon'] = Amazon()

@@ -8,7 +8,8 @@ from dataclasses import dataclass
 
 @dataclass
 class AMI:
-    Amazon_Linux_2  = 'ami-0c02fb55956c7d316'
+    # Amazon_Linux_2  = 'ami-0c02fb55956c7d316' bad
+    Amazon_Linux_2  = 'ami-0f0f9d42fd1e4ac96'
     Ubuntu_other    = 'ami-00498a47f0a5d4232'
     Suse            = 'ami-0226a08ab7f8c5d03'
     UbuntuA         = 'ami-048ddca51ab3229ab' # Ubuntu-A
