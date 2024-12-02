@@ -1,5 +1,6 @@
 import sys
 import subprocess
+import string
 
 from colorama import Fore, Back, Style
 
@@ -16,6 +17,7 @@ def cli(line):
 
 def runc(line,dry=False):
     return run(line, dry, capture=True)
+
 def run(line, dry=False, capture=False):
     stderr( '\nRunning:')
     stderr(f'    {bold(line)}')
@@ -25,4 +27,18 @@ def run(line, dry=False, capture=False):
         capture_output=capture,
         text=True
     )
+
+def menu(o):
+    o = dict( zip(string.ascii_lowercase, o ) )
+    if not o:
+        print('No options.')
+        return None
+    while True:
+        for k,v in o.items():
+            print(f"{k}) {v}")
+        choice = input( 'enter number: ' ).strip().lower()[:1]
+        if choice in o.keys():
+            return o[choice]
+        if not choice:
+            return None
 
