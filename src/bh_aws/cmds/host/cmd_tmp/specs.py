@@ -18,14 +18,14 @@ class Ubuntu(Showme_ABC):
     UserData             = userdata('apt.sh')
     ImageId              = AMI.UbuntuA
     SecurityGroupIds     = [SG.default]
-    TagSpecifications    = tags4name('Ubuntu')
+    TagSpecifications    = tags4name('ubuntu')
 
 @dataclass
 class Suse(Showme_ABC):
     UserData             = userdata('suse.sh')
     ImageId              = AMI.Suse
     SecurityGroupIds     = [SG.default]
-    TagSpecifications    = tags4name('Suse')
+    TagSpecifications    = tags4name('suse')
     SubnetId             = SUBNET.default
 
 SPECS={}
