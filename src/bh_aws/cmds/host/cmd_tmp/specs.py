@@ -15,9 +15,9 @@ class Amazon(Showme_ABC):
 
 @dataclass
 class Ubuntu(Showme_ABC):
-    UserData             = userdata('apt.sh')
+    UserData             = userdata('ubuntu.sh')
     ImageId              = AMI.UbuntuA
-    SecurityGroupIds     = [SG.default]
+    SecurityGroupIds     = [SG.default, SG.bch_allows_vnc]
     TagSpecifications    = tags4name('ubuntu')
 
 @dataclass

@@ -25,4 +25,4 @@ class SUBNET:
 class SG:
     aaa              = 'sg-01304974040835e2f'
     default          = 'sg-0b9a4ef40ee78a621' # Ubuntu-A
-
+    bch_allows_vnc   = 'sg-0f9a9fb1233e294aa'
