@@ -2,7 +2,10 @@ import sys
 import subprocess
 import string
 
+from rich.console import Console
 from colorama import Fore, Back, Style
+
+rprint = Console().print
 
 def stderr(txt):
     sys.stderr.write(str(txt) + '\n')
@@ -43,14 +46,19 @@ def dmenu(dikt):
         return dikt[choice]
 
 def menu(o):
+    def rich(x):
+        if hasattr(x,'rich'):
+            return x.rich()
+        else:
+            return x
     o = dict( zip(string.ascii_lowercase, o ) )
     if not o:
         print('No options.')
         return None
     while True:
         for k,v in o.items():
-            print(f"{k}) {v}")
-        choice = input( 'enter number: ' ).strip().lower()[:1]
+            rprint(f"{k})", rich(v))
+        choice = input( 'enter option: ' ).strip().lower()[:1]
         if choice in o.keys():
             return o[choice]
         if not choice:

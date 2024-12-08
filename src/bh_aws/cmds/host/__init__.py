@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 from pprint import pprint
 import typing_extensions
-
+from rich.console import Console
+console = Console()
+rprint = console.print
+from rich.text import Text
 import typer
 
 from bh_aws import Session
@@ -15,6 +18,18 @@ OO = typer.Option
 app = typer.Typer()
 
 
+style4state={}
+style4state['running'] = 'bold black'
+style4state['stopped'] = 'black'
+style4state['terminated'] = 'bold magenta'
+
+def text4inst(inst):
+    style = style4state.get(inst.state(), '' )
+    text = Text()
+    text.append(f'{inst} {inst.id()} {inst.ip()}', style=style)
+    return text
+
+
 @app.callback()
 def dummy():
     """Manage ec2 instances
@@ -26,7 +41,7 @@ def list( profile: str='showme'):
     """List ec2 instances.
     """
     for inst in Session(profile).instances():
-        print( inst )
+        rprint(inst.rich())
 
 
 @app.command()
@@ -71,7 +86,7 @@ def ssh(
     if inst is None:
         return
     login = login or inst.root_login()
-    ip = inst.addr()
+    ip = inst.ip()
     pem = f'~/.ssh/{pem}'
     line= f"ssh -i {pem} {login}@{ip}"
     run(line, dry=dry)
