@@ -28,6 +28,20 @@ def run(line, dry=False, capture=False):
         text=True
     )
 
+def prompt_yes(msg=''):
+    print(msg)
+    a = (input( 'type YES to proceed: ' ).lower() + 'x')[0]
+    if a =='y':
+        return True
+    else:
+        print( 'aborting' )
+        return False
+
+def dmenu(dikt):
+    choice = menu(dikt.keys())
+    if choice:
+        return dikt[choice]
+
 def menu(o):
     o = dict( zip(string.ascii_lowercase, o ) )
     if not o:

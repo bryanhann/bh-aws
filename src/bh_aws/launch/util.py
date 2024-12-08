@@ -26,3 +26,21 @@ def tags4dict(d):
     for key,value in d.items():
         acc.append( {'Key': key, 'Value': value } )
     return [{'ResourceType': 'instance', 'Tags': acc}]
+
+def inject4dikt4name(dikt,name):
+    """Override the 'name' tag in template dictionary
+    """
+    def isnumber(x):
+        try: int('1' + x) + 2
+        except: return False
+        return True
+    for ii,tspec in enumerate(dikt['TagSpecifications']):
+        for jj,tag in enumerate(tspec['Tags']):
+            if tag['Key'] == 'Name':
+                old = tag['Value']
+                old = old.split( '-' )
+                old and old[0] == 'tmp' and old.pop(0)
+                old and isnumber(old[0]) and old.pop(0)
+                old = '-'.join(old)
+                tag['Value'] = f'{name}-{old}'
+

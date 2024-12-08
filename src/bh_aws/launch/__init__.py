@@ -21,6 +21,13 @@ class Ubuntu(Showme_ABC):
     TagSpecifications    = tags4name('ubuntu')
 
 @dataclass
+class Ubuntu_medium(Showme_ABC):
+    UserData             = userdata('ubuntu.sh')
+    ImageId              = AMI.UbuntuA
+    SecurityGroupIds     = [SG.default, SG.bch_allows_vnc]
+    TagSpecifications    = tags4name('ubuntu-medium')
+    InstanceType         = 't2.medium'
+@dataclass
 class Suse(Showme_ABC):
     UserData             = userdata('suse.sh')
     ImageId              = AMI.Suse
@@ -29,6 +36,7 @@ class Suse(Showme_ABC):
     SubnetId             = SUBNET.default
 
 SPECS={}
+SPECS['ubuntu_medium'] = Ubuntu_medium()
 SPECS['ubuntu'] = Ubuntu()
 SPECS['suse'] = Suse()
 SPECS['amazon'] = Amazon()
